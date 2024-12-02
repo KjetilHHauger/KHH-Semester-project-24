@@ -4,7 +4,7 @@ const profileImage = document.getElementById('profileImage');
 const accessToken = localStorage.getItem('accessToken');
 
 if (!accessToken) {
-  window.location.href = '/login.html';
+  window.location.href = './login.html';
 }
 
 async function fetchProfile() {
@@ -29,7 +29,7 @@ async function fetchProfile() {
     console.error(error);
     alert(error.message);
     localStorage.removeItem('accessToken'); 
-    window.location.href = '/index.html'; 
+    window.location.href = '../../index.html'; 
   }
 }
 
