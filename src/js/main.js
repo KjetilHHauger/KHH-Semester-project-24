@@ -16,7 +16,6 @@ const pageSize = 24;
 let allAuctionsLoaded = false;
 let currentQuery = '';
 
-// Fetch Auctions
 async function fetchAuctions(page = 1, limit = 24, query = '') {
   let url = `${API_BASE_URL}auction/listings?_page=${page}&_limit=${limit}`;
   if (query) {
@@ -68,6 +67,7 @@ function renderAuctions(auctions) {
     const imageUrl = media && media[0]?.url ? media[0].url : 'https://via.placeholder.com/800x400';
     const bidsCount = _count?.bids || 0;
     const timeLeft = calculateTimeLeft(endsAt);
+    const isAuctionActive = new Date(endsAt) > now;
 
     auctionList.innerHTML += `
       <div class="max-w-sm bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
@@ -80,6 +80,20 @@ function renderAuctions(auctions) {
             <p>Bids: <span class="font-semibold">${bidsCount}</span></p>
             <p>Time Left: <span class="text-gray-500">${timeLeft}</span></p>
           </div>
+          ${
+            token && isAuctionActive
+              ? `<div class="flex items-center gap-2">
+                  <input type="number" id="bid-${id}" 
+                         value="${bidsCount + 1}" 
+                         min="${bidsCount + 1}" 
+                         class="w-full px-4 py-2 border border-gray-300 rounded">
+                  <button onclick="window.placeBid('${id}', document.getElementById('bid-${id}').value)"
+                          class="px-4 py-2 bg-picton-blue text-white font-medium rounded hover:bg-prussian-blue transition">
+                    Bid
+                  </button>
+                </div>`
+              : ''
+          }
         </div>
       </div>
     `;
@@ -93,6 +107,46 @@ function calculateTimeLeft(endsAt) {
   const hours = Math.floor(diff / 1000 / 60 / 60);
   const minutes = Math.floor((diff / 1000 / 60) % 60);
   return diff > 0 ? `${hours}h ${minutes}m` : 'Expired';
+}
+
+async function placeBid(auctionId, bidAmount) {
+  if (!token) {
+    alert('You must be logged in to place a bid.');
+    return;
+  }
+
+  const myHeaders = new Headers();
+  myHeaders.append("X-Noroff-API-Key", "04cc0fef-f540-4ae1-8c81-5706316265d4");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  const raw = JSON.stringify({
+    "amount": bidAmount
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+
+  try {
+    const response = await fetch(`${API_BASE_URL}auction/listings/${auctionId}/bids`, requestOptions);
+
+    if (response.ok) {
+      const result = await response.json();
+      alert('Bid placed successfully!');
+      location.reload(); 
+    } else {
+      const error = await response.json();
+      console.error("Failed to place bid:", error);
+      alert(`Failed to place bid: ${error.message || 'Please try again later.'}`);
+    }
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    alert('An unexpected error occurred. Please try again.');
+  }
 }
 
 async function loadAuctions() {
@@ -122,5 +176,7 @@ function handleSearchInput() {
 
 searchInput.addEventListener('input', handleSearchInput);
 loadMoreButton.addEventListener('click', loadAuctions);
+
+window.placeBid = placeBid;
 
 loadAuctions();

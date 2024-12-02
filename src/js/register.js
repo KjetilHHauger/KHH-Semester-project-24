@@ -1,4 +1,7 @@
 import { API_BASE_URL } from './api.js';
+import { loadNav } from './utils.js';
+
+loadNav();
 
 const registerForm = document.getElementById('registerForm');
 const messageDiv = document.getElementById('message');
@@ -36,7 +39,7 @@ registerForm.addEventListener('submit', async (e) => {
       messageDiv.className = 'text-green-500';
 
       setTimeout(() => {
-        window.location.href = './index.html';
+        window.location.href = `${window.location.origin}/index.html`;
       }, 2000);
     } else {
       messageDiv.textContent = `Error: ${data.message}`;
