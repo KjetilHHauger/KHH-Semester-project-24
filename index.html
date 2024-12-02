@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auctions</title>
-  <link rel="stylesheet" href="./src/css/style.css" />
-</head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-  <main class="flex-grow container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-6 mt-36">Auctions</h1>
-    <div id="auctionList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-    <div id="loadMoreContainer" class="flex justify-center mt-6">
-      <button id="loadMore" class="px-6 py-2 bg-picton-blue text-white font-medium rounded hover:bg-prussian-blue transition">
-        Load More
-      </button>
-    </div>
-    <div id="loading" class="hidden text-center mt-6">
-      <p class="text-gray-500">Loading auctions...</p>
-    </div>
-    <div id="errorMessage" class="hidden text-red-500 text-center mt-6"></div>
-  </main>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auctions</title>
+    <link rel="stylesheet" href="./src/css/style.css" />
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <main class="flex-grow container mx-auto p-4">
+      <div class="hidden lg:flex justify-between space-x-2 mb-6">
+        <h1 class="text-3xl font-bold">Auctions</h1>
+        <div id="searchContainer">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search auctions..."
+            class="px-4 py-2 border rounded text-rich-black"
+          />
+        </div>
+      </div>
+      <div
+        id="auctionList"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      ></div>
+      <div id="loadMoreContainer" class="flex justify-center mt-6">
+        <button
+          id="loadMore"
+          class="px-6 py-2 bg-picton-blue text-white font-medium rounded hover:bg-prussian-blue transition"
+        >
+          Load More
+        </button>
+      </div>
+      <div id="loading" class="hidden text-center mt-6">
+        <p class="text-gray-500">Loading auctions...</p>
+      </div>
+      <div id="errorMessage" class="hidden text-red-500 text-center mt-6"></div>
+    </main>
 
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
 </html>
