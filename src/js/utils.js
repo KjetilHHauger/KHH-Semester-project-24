@@ -27,28 +27,28 @@ export async function loadNav() {
 
   // Show/Hide links 
   if (token) {
-    if (loginLink) loginLink.style.display = 'none'; // Hide login if logged in
-    if (mobileLoginLink) mobileLoginLink.style.display = 'none'; // Hide mobile login
-    if (logoutButton) logoutButton.style.display = 'inline'; // Show desktop logout
-    if (mobileLogoutButton) mobileLogoutButton.style.display = 'inline'; // Show mobile logout
+    if (loginLink) loginLink.style.display = 'none'; 
+    if (mobileLoginLink) mobileLoginLink.style.display = 'none';
+    if (logoutButton) logoutButton.style.display = 'inline';
+    if (mobileLogoutButton) mobileLogoutButton.style.display = 'inline';
   } else {
-    if (profileLink) profileLink.style.display = 'none'; // Hide profile if not logged in
-    if (logoutButton) logoutButton.style.display = 'none'; // Hide desktop logout
-    if (mobileLogoutButton) mobileLogoutButton.style.display = 'none'; // Hide mobile logout
+    if (profileLink) profileLink.style.display = 'none'; 
+    if (logoutButton) logoutButton.style.display = 'none'; 
+    if (mobileLogoutButton) mobileLogoutButton.style.display = 'none';
   }
 
   // Logout
   const handleLogout = () => {
-    localStorage.removeItem('accessToken'); // Clear the token
-    window.location.href = '/index.html'; // Redirect to home page
+    localStorage.removeItem('accessToken'); 
+    window.location.href = '/index.html'; 
   };
   if (logoutButton) logoutButton.addEventListener('click', handleLogout);
   if (mobileLogoutButton) mobileLogoutButton.addEventListener('click', handleLogout);
 
-  // Mobile Menu Toggle
+  // Mobile menu toggle
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden'); // Show or hide the mobile menu
+      mobileMenu.classList.toggle('hidden'); 
     });
   }
 

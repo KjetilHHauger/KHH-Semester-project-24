@@ -12,37 +12,36 @@ loginForm.addEventListener('submit', async (e) => {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
 
-  const loginData = {
-    email,
-    password,
-  };
-
   try {
     const response = await fetch(`${API_BASE_URL}auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
+    const result = await response.json(); 
 
     if (response.ok) {
-      localStorage.setItem('accessToken', data.data.accessToken);
+      const { accessToken, name } = result.data; 
+      if (!accessToken || !name) {
+        throw new Error('Access token or username is missing in the response.');
+      }
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('username', name);
 
       messageDiv.textContent = 'Login successful! Redirecting...';
       messageDiv.className = 'text-green-500';
 
-      setTimeout(() => {
-        window.location.href = '/index.html';
-      }, 2000);
+      setTimeout(() => window.location.href = '/index.html', 2000);
     } else {
-      messageDiv.textContent = `Error: ${data.message}`;
+      messageDiv.textContent = `Error: ${result.data?.message || 'Login failed.'}`;
       messageDiv.className = 'text-red-500';
     }
   } catch (error) {
-    messageDiv.textContent = 'An unexpected error occurred. Please try again later.';
+    messageDiv.textContent = 'An unexpected error occurred.';
     messageDiv.className = 'text-red-500';
   }
 });
