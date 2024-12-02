@@ -13,22 +13,19 @@
       <form id="loginForm" class="space-y-4">
         <div>
           <label for="email" class="block text-sm font-medium text-white">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required
-            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
+          <input type="email" id="email" placeholder="Enter your email" required
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border rounded">
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-white">Password</label>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required
-            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
+          <input type="password" id="password" placeholder="Enter your password" required
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border rounded">
         </div>
-        <button type="submit" class="w-full py-2 bg-cta text-white font-medium rounded hover:bg-prussian-blue transition">
-          Login
-        </button>
+        <button type="submit" class="w-full py-2 bg-cta text-white rounded">Login</button>
       </form>
       <div id="message" class="mt-4 text-center"></div>
     </div>
   </div>
-
   <script type="module" src="/src/js/login.js"></script>
 </body>
 </html>

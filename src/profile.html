@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="bg-white text-rich-black min-h-screen flex flex-col items-center mx-8">
-  <div class="w-full max-w-lg p-4">
-    <div class="border border-picton-blue rounded-lg p-4 flex items-center justify-between mb-6">
-      <div>
-        <p class="text-lg font-bold">User</p>
-        <p class="text-sm text-gray-500">Email</p>
-        <button id="updateProfileButton" class="text-picton-blue text-sm underline mt-2">Update profile</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
+    <main class="w-full max-w-lg mx-auto p-4 mt-24">
+      <div
+        class="border border-blue-500 rounded-lg p-8 flex items-start justify-between mb-6 bg-white shadow-md"
+      >
+        <div>
+          <p id="username" class="text-lg font-bold">Loading name...</p>
+          <p id="email" class="text-sm text-gray-600">Loading email...</p>
+          <p id="bio" class="text-sm text-gray-800 mt-2">Loading bio...</p>
+        </div>
+        <div class="text-center">
+          <img
+            id="profileImage"
+            src=""
+            alt="Profile"
+            class="w-20 h-20 rounded-full"
+          />
+          <p id="credits" class="text-sm text-gray-800 mt-2">
+            Loading credits...
+          </p>
+        </div>
       </div>
-      <img src="https://via.placeholder.com/80" alt="Profile" id="profileImage" class="w-20 h-20 border border-picton-blue rounded-lg">
-    </div>
-    <button id="myAuctionsToggle" class="w-full flex items-center justify-between border border-gray-300 rounded-lg p-4 mb-4 hover:bg-gray-100">
-      <span>My auctions</span>
-      <img src="https://via.placeholder.com/20" alt="Icon" class="w-5 h-5">
-    </button>
-    <div id="myAuctions" class="hidden space-y-4"></div>
-    <button id="activeBidsToggle" class="w-full flex items-center justify-between border border-gray-300 rounded-lg p-4 mb-4 hover:bg-gray-100">
-      <span>My bids</span>
-      <img src="https://via.placeholder.com/20" alt="Icon" class="w-5 h-5">
-    </button>
-    <div id="activeBids" class="hidden space-y-4"></div>
-    <button id="auctionsWonToggle" class="w-full flex items-center justify-between border border-gray-300 rounded-lg p-4 mb-4 hover:bg-gray-100">
-      <span>My wins</span>
-      <img src="https://via.placeholder.com/20" alt="Icon" class="w-5 h-5">
-    </button>
-    <div id="auctionsWon" class="hidden space-y-4"></div>
-  </div>
 
-  <script type="module" src="/src/js/profile.js"></script>
-</body>
+      <button
+        id="myListingsToggle"
+        class="w-full flex items-center justify-between border rounded-lg p-4 mb-4 hover:bg-gray-100"
+      >
+        <span>My Listings</span>
+      </button>
+      <div id="myListings" class="hidden space-y-4"></div>
+
+      <button
+        id="myWinsToggle"
+        class="w-full flex items-center justify-between border rounded-lg p-4 mb-4 hover:bg-gray-100"
+      >
+        <span>My Wins</span>
+      </button>
+      <div id="myWins" class="hidden space-y-4"></div>
+    </main>
+
+    <script type="module" src="/src/js/profile.js"></script>
+  </body>
 </html>
