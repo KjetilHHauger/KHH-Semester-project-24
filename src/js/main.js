@@ -16,7 +16,7 @@ let allAuctionsLoaded = false;
 
 // Fetch Auctions
 async function fetchAuctions(page = 1, limit = 24) {
-    const url = `https://v2.api.noroff.dev/auction/listings?_page=${page}&_limit=${limit}`;
+  const url = `${API_BASE_URL}auction/listings?_page=${page}&_limit=${limit}`;
     try {
       const response = await fetch(url, {
         headers: {
@@ -38,13 +38,14 @@ async function fetchAuctions(page = 1, limit = 24) {
   }
   
 
-function renderAuctions(auctions) {
+  function renderAuctions(auctions) {
     auctions.forEach((auction) => {
       const { id, title, media, endsAt, _count } = auction;
   
       const imageUrl = media && media[0]?.url ? media[0].url : 'https://via.placeholder.com/800x400';
       const bidsCount = _count?.bids || 0;
       const timeLeft = calculateTimeLeft(endsAt);
+      const currentBid = _count?.highestBid || 0; 
   
       auctionList.innerHTML += `
         <div class="max-w-sm bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
@@ -57,11 +58,26 @@ function renderAuctions(auctions) {
               <p>Bids: <span class="font-semibold">${bidsCount}</span></p>
               <p>Time Left: <span class="text-gray-500">${timeLeft}</span></p>
             </div>
+            ${
+              token
+                ? `<div class="flex items-center gap-2">
+                    <input type="number" id="bid-${id}" 
+                           value="${currentBid + 1}" 
+                           min="${currentBid + 1}" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded">
+                    <button onclick="placeBid('${id}', document.getElementById('bid-${id}').value)"
+                            class="px-4 py-2 bg-picton-blue text-white font-medium rounded hover:bg-prussian-blue transition">
+                      Bid
+                    </button>
+                  </div>`
+                : ''
+            }
           </div>
         </div>
       `;
     });
   }
+  
   
 function calculateTimeLeft(endsAt) {
     const now = new Date();
