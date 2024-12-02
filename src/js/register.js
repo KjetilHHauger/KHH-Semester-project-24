@@ -36,7 +36,7 @@ registerForm.addEventListener('submit', async (e) => {
       messageDiv.className = 'text-green-500';
 
       setTimeout(() => {
-        window.location.href = '/index.html';
+        window.location.href = './index.html';
       }, 2000);
     } else {
       messageDiv.textContent = `Error: ${data.message}`;

@@ -1,9 +1,9 @@
 import { API_BASE_URL } from './api.js';
 
 const profileImage = document.getElementById('profileImage');
-const accessToken = localStorage.getItem('accessToken');
+const token = localStorage.getItem('accessToken');
 
-if (!accessToken) {
+if (!token) {
   window.location.href = './login.html';
 }
 
@@ -12,7 +12,7 @@ async function fetchProfile() {
     const response = await fetch(`${API_BASE_URL}users/me`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${accessToken}`, 
+        Authorization: `Bearer ${token}`, 
       },
     });
 
@@ -28,7 +28,7 @@ async function fetchProfile() {
   } catch (error) {
     console.error(error);
     alert(error.message);
-    localStorage.removeItem('accessToken'); 
+    localStorage.removeItem('token'); 
     window.location.href = '../../index.html'; 
   }
 }
