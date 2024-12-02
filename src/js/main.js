@@ -44,7 +44,7 @@ async function fetchAuctions(page = 1, limit = 24, query = '') {
 }
 
 function renderAuctions(auctions) {
-  auctionList.innerHTML = ''; // Clear existing auctions for new search or load
+  auctionList.innerHTML = '';
 
   if (!Array.isArray(auctions) || auctions.length === 0) {
     errorMessage.classList.remove('hidden');
@@ -54,18 +54,14 @@ function renderAuctions(auctions) {
 
   errorMessage.classList.add('hidden');
 
-  // Separate expired and active auctions
   const now = new Date();
   const activeAuctions = auctions.filter(auction => new Date(auction.endsAt) > now);
   const expiredAuctions = auctions.filter(auction => new Date(auction.endsAt) <= now);
 
-  // Sort active auctions by time left (ascending)
   activeAuctions.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
 
-  // Concatenate active auctions with expired auctions (active first, expired at the back)
   const sortedAuctions = [...activeAuctions, ...expiredAuctions];
 
-  // Render auctions
   sortedAuctions.forEach((auction) => {
     const { id, title, media, endsAt, _count } = auction;
 
@@ -124,9 +120,7 @@ function handleSearchInput() {
   loadAuctions();
 }
 
-// Initial setup
 searchInput.addEventListener('input', handleSearchInput);
 loadMoreButton.addEventListener('click', loadAuctions);
 
-// Load initial data
 loadAuctions();
