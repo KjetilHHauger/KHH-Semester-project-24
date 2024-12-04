@@ -9,11 +9,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const emailElement = document.getElementById('email');
   const bioElement = document.getElementById('bio');
   const creditsElement = document.getElementById('credits');
+  const updateModal = document.getElementById('updateModal');
+  const updateForm = document.getElementById('updateForm');
+  const avatarInput = document.getElementById('avatarInput');
+  const bioInput = document.getElementById('bioInput');
+  const cancelUpdate = document.getElementById('cancelUpdate');
+  const myUpdateButton = document.getElementById('myUpdate');
+  const myCreateButton = document.getElementById('myCreate');
   const myListingsToggle = document.getElementById('myListingsToggle');
-  const myListings = document.getElementById('myListings');
-  const myWinsToggle = document.getElementById('myWinsToggle');
-  const myWins = document.getElementById('myWins');
-
+  const myListingsContainer = document.getElementById('myListings');
   const token = localStorage.getItem('accessToken');
   const username = localStorage.getItem('username');
 
@@ -34,35 +38,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-      const responseJson = await response.json();
-      const data = responseJson.data;
+      const data = (await response.json()).data;
 
-      // Log data to verify the structure
-      console.log(data);
-
-      // Update profile information
-      if (data.avatar && data.avatar.url) {
-        profileImage.src = data.avatar.url;
-        profileImage.alt = data.avatar.alt || 'User Avatar';
-      } else {
-        console.warn('Using placeholder image, avatar URL is missing.');
-        profileImage.src = 'https://via.placeholder.com/80';
-        profileImage.alt = 'User Avatar';
-      }
-
+      profileImage.src = data.avatar?.url || 'https://via.placeholder.com/80';
+      profileImage.alt = data.avatar?.alt || 'User Avatar';
       usernameElement.textContent = data.name || 'N/A';
       emailElement.textContent = data.email || 'N/A';
-      bioElement.textContent = data.bio !== null ? data.bio : 'No bio provided.';
+      bioElement.textContent = data.bio || 'No bio provided.';
       creditsElement.textContent = `Credits: ${data.credits || 0}`;
-    } catch (error) {
-      console.error('Error fetching profile:', error.message);
+    } catch {
       window.location.href = './login.html';
     }
   }
 
-  async function fetchListingsOrBids(type) {
+  async function fetchListings() {
     try {
-      const response = await fetch(`${API_BASE_URL}auction/profiles/${username}/${type}`, {
+      const response = await fetch(`${API_BASE_URL}auction/profiles/${username}/listings`, {
         method: 'GET',
         headers: {
           'X-Noroff-API-Key': '04cc0fef-f540-4ae1-8c81-5706316265d4',
@@ -72,79 +63,77 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-      const responseJson = await response.json();
-      const data = responseJson.data;
+      const data = (await response.json()).data;
       return data;
     } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
+      console.error('Error fetching listings:', error.message);
+      return [];
     }
   }
 
-  async function deleteListing(listingId) {
-    try {
-      const response = await fetch(`${API_BASE_URL}auction/listings/${listingId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-Noroff-API-Key': '04cc0fef-f540-4ae1-8c81-5706316265d4',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete listing. Status: ${response.status}`);
-      }
-
-      alert('Listing deleted successfully!');
-      // Refresh the listings after deleting
-      const updatedListings = await fetchListingsOrBids('listings');
-      renderItems(myListings, updatedListings, 'listings');
-    } catch (error) {
-      console.error('Error deleting listing:', error.message);
-      alert('Failed to delete the listing. Please try again.');
+  function renderListings(listings) {
+    if (!listings || listings.length === 0) {
+      myListingsContainer.innerHTML = '<p class="text-gray-500">You have no listings.</p>';
+      return;
     }
-  }
 
-  function renderItems(container, items, type) {
-    container.innerHTML = items
-      .map(
-        (item) => `
-        <div class="p-4 border rounded-lg bg-white shadow-md w-1/2 mx-auto lg:w-1/3 mb-4">
-          <img src="${item.media[0]?.url || 'https://via.placeholder.com/150'}" alt="${item.media[0]?.alt || 'Item'}" class="w-full h-36 object-cover rounded-md mb-2">
-          <h3 class="text-lg font-semibold text-center">${item.title}</h3>
-          ${
-            type === 'listings'
-              ? `<button class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800 transition delete-button" data-id="${item.id}">
-                  Delete
-                </button>`
-              : ''
-          }
-        </div>`
-      )
+    myListingsContainer.innerHTML = listings
+      .map((listing) => {
+        const timeLeft = calculateTimeLeft(listing.endsAt);
+        const imageUrl = listing.media[0]?.url || 'https://fakeimg.pl/600x400?text=No+image';
+
+        return `
+          <div class="p-4 border rounded-lg bg-white shadow-md w-full md:w-1/2 mx-auto mb-4">
+            <img src="${imageUrl}" alt="${listing.media[0]?.alt || 'Item Image'}" class="h-36 object-contain rounded-md mb-2 mx-auto">
+            <h3 class="text-lg font-semibold text-center">${listing.title}</h3>
+            <p class="text-center text-sm text-gray-600">${timeLeft}</p>
+          </div>
+        `;
+      })
       .join('');
+  }
 
-    if (type === 'listings') {
-      const deleteButtons = container.querySelectorAll('.delete-button');
-      deleteButtons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-          const listingId = event.target.getAttribute('data-id');
-          await deleteListing(listingId);
-        });
-      });
+  function calculateTimeLeft(endsAt) {
+    const now = new Date();
+    const end = new Date(endsAt);
+    const diff = Math.max(0, end - now);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return diff > 0 ? `${days}d ${hours}h ${minutes}m` : 'Expired';
+  }
+
+  myListingsToggle.addEventListener('click', async () => {
+    myListingsContainer.classList.toggle('hidden');
+    if (!myListingsContainer.classList.contains('hidden') && myListingsContainer.innerHTML === '') {
+      const listings = await fetchListings();
+      renderListings(listings);
     }
-  }
+  });
 
-  async function handleToggle(toggleButton, container, type) {
-    toggleButton.addEventListener('click', async () => {
-      container.classList.toggle('hidden');
-      if (!container.classList.contains('hidden') && container.innerHTML === '') {
-        const items = await fetchListingsOrBids(type);
-        renderItems(container, items, type);
-      }
-    });
-  }
+  myUpdateButton.addEventListener('click', () => {
+    if (updateModal.classList.contains('hidden')) {
+      avatarInput.value = profileImage.src;
+      bioInput.value = bioElement.textContent !== 'No bio provided.' ? bioElement.textContent : '';
+      updateModal.classList.remove('hidden');
+    } else {
+      updateModal.classList.add('hidden');
+    }
+  });
 
-  handleToggle(myListingsToggle, myListings, 'listings');
-  handleToggle(myWinsToggle, myWins, 'bids');
+  cancelUpdate.addEventListener('click', () => {
+    updateModal.classList.add('hidden');
+  });
+
+  updateForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    updateModal.classList.add('hidden');
+    await updateProfile(avatarInput.value.trim(), bioInput.value.trim());
+  });
+
+  myCreateButton.addEventListener('click', () => {
+    window.location.href = './create.html';
+  });
 
   fetchProfile();
 });
