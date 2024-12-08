@@ -1,31 +1,65 @@
 <nav class="bg-picton-blue text-white p-4 sticky top-0 w-full z-10">
-    <div class="container mx-auto flex items-center justify-between">
-      <!-- Mobile -->
-      <button id="menuToggle" class="lg:hidden focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+  <div class="container mx-auto flex items-center justify-between">
+    <!-- Mobile -->
+    <button id="menuToggle" class="lg:hidden focus:outline-none">
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Brand -->
+    <a href="/index.html" class="text-xl font-bold">MyAuction</a>
+
+    <!-- Desktop menu -->
+    <div id="menu" class="hidden lg:flex space-x-6">
+      <a href="../index.html" class="hover:text-gray-300">Auctions</a>
+      <a href="/src/profile.html" class="hover:text-gray-300">Profile</a>
+      <a href="/src/login.html" class="hover:text-gray-300" id="loginLink"
+        >Login</a
+      >
+      <button id="logoutButton" class="hover:text-gray-300 hidden">
+        Logout
       </button>
-  
-      <!-- Brand -->
-      <a href="/index.html" class="text-xl font-bold">MyAuction</a>
-  
-      <!-- Desktop menu -->
-      <div id="menu" class="hidden lg:flex space-x-6">
-        <a href="../index.html" class="hover:text-gray-300">Auctions</a>
-        <a href="/src/profile.html" class="hover:text-gray-300">Profile</a>
-        <a href="/src/login.html" class="hover:text-gray-300" id="loginLink">Login</a>
-        <button id="logoutButton" class="hover:text-gray-300 hidden">Logout</button>
-      </div>
     </div>
-  
-    <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden lg:hidden flex-col bg-picton-blue text-white p-4 absolute top-14 left-0 w-full z-20">
-      <a href="../index.html" class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition">Auctions</a>
-      <a href="/src/profile.html" class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition">Profile</a>
-      <a href="/src/login.html" class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition" id="mobileLoginLink">Login</a>
-      <button id="mobileLogoutButton" class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition hidden">Logout</button>
-    </div>
-    
-  </nav>
-  
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobileMenu"
+    class="hidden lg:hidden flex-col bg-picton-blue text-white p-4 absolute top-14 left-0 w-full z-20"
+  >
+    <a
+      href="../index.html"
+      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition"
+      >Auctions</a
+    >
+    <a
+      href="/src/profile.html"
+      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition"
+      >Profile</a
+    >
+    <a
+      href="/src/login.html"
+      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition"
+      id="mobileLoginLink"
+      >Login</a
+    >
+    <button
+      id="mobileLogoutButton"
+      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-picton-blue transition hidden"
+    >
+      Logout
+    </button>
+  </div>
+</nav>

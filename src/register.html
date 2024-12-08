@@ -1,41 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="bg-white text-rich-black flex-col items-center justify-center min-h-screen">
-  <div class="bg-picton-blue p-8 rounded-lg shadow-md w-full max-w-md mx-auto ">
-    <h1 class="text-rich-black text-3xl font-bold text-center mb-6">Create Account</h1>
-    <form id="registerForm" class="space-y-4">
-      <div>
-        <label for="name" class="block text-sm font-medium text-white">Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required 
-          class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
-      </div>
-      <div>
-        <label for="email" class="block text-sm font-medium text-white">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required 
-          class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium text-white">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required 
-          class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
-      </div>
-      <div>
-        <label for="avatar" class="block text-sm font-medium text-white">Avatar URL (optional)</label>
-        <input type="url" id="avatar" name="avatar" placeholder="Enter avatar URL"
-          class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black">
-      </div>
-      <button type="submit" class="w-full py-2 bg-cta text-white font-medium rounded hover:bg-prussian-blue transition">
-        Register
-      </button>
-    </form>
-    <div id="message" class="mt-4 text-center"></div>
-  </div>
-  <script src="./js/register.js" type="module"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body
+    class="bg-white text-rich-black flex-col items-center justify-center min-h-screen"
+  >
+    <div
+      class="bg-picton-blue p-8 rounded-lg shadow-md w-full max-w-md mx-auto"
+    >
+      <h1 class="text-rich-black text-3xl font-bold text-center mb-6">
+        Create Account
+      </h1>
+      <form id="registerForm" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-white"
+            >Name</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            required
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black"
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-white"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black"
+          />
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-white"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black"
+          />
+        </div>
+        <div>
+          <label for="avatar" class="block text-sm font-medium text-white"
+            >Avatar URL (optional)</label
+          >
+          <input
+            type="url"
+            id="avatar"
+            name="avatar"
+            placeholder="Enter avatar URL"
+            class="mt-1 w-full px-4 py-2 bg-white text-rich-black border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-rich-black"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full py-2 bg-cta text-white font-medium rounded hover:bg-prussian-blue transition"
+        >
+          Register
+        </button>
+      </form>
+      <div id="message" class="mt-4 text-center"></div>
+    </div>
+    <script src="./js/register.js" type="module"></script>
+  </body>
 </html>
