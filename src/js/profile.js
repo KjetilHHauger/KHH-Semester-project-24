@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const myCreateButton = document.getElementById('myCreate');
   const myListingsToggle = document.getElementById('myListingsToggle');
   const myListingsContainer = document.getElementById('myListings');
+  const myWinsToggle = document.getElementById('myWinsToggle');
+  const myWinsContainer = document.getElementById('myWins');
   const token = localStorage.getItem('accessToken');
   const username = localStorage.getItem('username');
 
@@ -28,46 +30,60 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function fetchProfile() {
     try {
-      const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
-        method: 'GET',
-        headers: {
-          'X-Noroff-API-Key': '04cc0fef-f540-4ae1-8c81-5706316265d4',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${API_BASE_URL}auction/profiles/${username}?_listings=true&_wins=true`,
+        {
+          method: 'GET',
+          headers: {
+            'X-Noroff-API-Key': '04cc0fef-f540-4ae1-8c81-5706316265d4',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-      const data = (await response.json()).data;
-
-      profileImage.src = data.avatar?.url || 'https://via.placeholder.com/80';
-      profileImage.alt = data.avatar?.alt || 'User Avatar';
-      usernameElement.textContent = data.name || 'N/A';
-      emailElement.textContent = data.email || 'N/A';
-      bioElement.textContent = data.bio || 'No bio provided.';
-      creditsElement.textContent = `Credits: ${data.credits || 0}`;
-    } catch {
-      window.location.href = './login.html';
+      const data = await response.json();
+      displayProfile(data.data);
+    } catch (error) {
+      console.error('Error fetching profile:', error.message);
     }
   }
 
-  async function fetchListings() {
+  function displayProfile(data) {
+    profileImage.src = data.avatar?.url || 'https://via.placeholder.com/80';
+    profileImage.alt = data.avatar?.alt || 'User Avatar';
+    usernameElement.textContent = data.name || 'N/A';
+    emailElement.textContent = data.email || 'N/A';
+    bioElement.textContent = data.bio || 'No bio provided.';
+    creditsElement.textContent = `Credits: ${data.credits || 0}`;
+
+    renderListings(data.listings || []);
+    renderWins(data.wins || []);
+  }
+
+  async function updateProfile(avatarUrl, bio) {
     try {
-      const response = await fetch(`${API_BASE_URL}auction/profiles/${username}/listings`, {
-        method: 'GET',
+      const response = await fetch(`${API_BASE_URL}auction/profiles/${username}`, {
+        method: 'PUT',
         headers: {
           'X-Noroff-API-Key': '04cc0fef-f540-4ae1-8c81-5706316265d4',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          avatar: { url: avatarUrl, alt: `${username}'s avatar` },
+          bio,
+        }),
       });
 
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-      const data = (await response.json()).data;
-      return data;
+      alert('Profile updated successfully!');
+      window.location.reload(); // Refresh page to show updated profile
     } catch (error) {
-      console.error('Error fetching listings:', error.message);
-      return [];
+      console.error('Error updating profile:', error.message);
+      alert('Failed to update profile. Please try again later.');
     }
   }
 
@@ -83,10 +99,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imageUrl = listing.media[0]?.url || 'https://fakeimg.pl/600x400?text=No+image';
 
         return `
-          <div class="p-4 border rounded-lg bg-white shadow-md w-full md:w-1/2 mx-auto mb-4">
+          <div
+            class="p-4 border rounded-lg bg-white shadow-md w-full cursor-pointer"
+            onclick="window.location.href='single.html?id=${listing.id}'"
+          >
             <img src="${imageUrl}" alt="${listing.media[0]?.alt || 'Item Image'}" class="h-36 object-contain rounded-md mb-2 mx-auto">
             <h3 class="text-lg font-semibold text-center">${listing.title}</h3>
             <p class="text-center text-sm text-gray-600">${timeLeft}</p>
+          </div>
+        `;
+      })
+      .join('');
+  }
+
+  function renderWins(wins) {
+    if (!wins || wins.length === 0) {
+      myWinsContainer.innerHTML = '<p class="text-gray-500">You have no wins.</p>';
+      return;
+    }
+
+    myWinsContainer.innerHTML = wins
+      .map((win) => {
+        const imageUrl = win.media[0]?.url || 'https://fakeimg.pl/600x400?text=No+image';
+
+        return `
+          <div
+            class="p-4 border rounded-lg bg-white shadow-md w-full cursor-pointer"
+            onclick="window.location.href='single.html?id=${win.id}'"
+          >
+            <img src="${imageUrl}" alt="${win.media[0]?.alt || 'Item Image'}" class="h-36 object-contain rounded-md mb-2 mx-auto">
+            <h3 class="text-lg font-semibold text-center">${win.title}</h3>
           </div>
         `;
       })
@@ -103,12 +145,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     return diff > 0 ? `${days}d ${hours}h ${minutes}m` : 'Expired';
   }
 
-  myListingsToggle.addEventListener('click', async () => {
+  myListingsToggle.addEventListener('click', () => {
     myListingsContainer.classList.toggle('hidden');
-    if (!myListingsContainer.classList.contains('hidden') && myListingsContainer.innerHTML === '') {
-      const listings = await fetchListings();
-      renderListings(listings);
-    }
+  });
+
+  myWinsToggle.addEventListener('click', () => {
+    myWinsContainer.classList.toggle('hidden');
   });
 
   myUpdateButton.addEventListener('click', () => {

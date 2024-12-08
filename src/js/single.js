@@ -144,7 +144,7 @@ async function loadAuctionDetails() {
     <div class="flex flex-col items-center">
       ${carousel}
       <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg">${description}</p>
-      <div class="flex justify-between items-center mt-4 w-full max-w-sm">
+      <div class="flex justify-between items-center mt-4 w-full max-w-3xl">
         <p class="text-lg font-medium text-gray-800">Highest Bid: <strong class="text-picton-blue">${
           highestBid || 'No bids yet'
         }</strong></p>
