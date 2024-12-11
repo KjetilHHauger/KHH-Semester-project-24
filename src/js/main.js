@@ -65,7 +65,7 @@ function renderAuctions(auctions) {
       <div class="p-4">
         <h3 class="text-lg font-semibold text-gray-800 mb-2">${title}</h3>
         <div class="text-sm text-gray-600 mb-4 flex justify-between">
-          <p>Time Left: <span class="text-gray-500">${timeLeft}</span></p>
+          <p>Time Left: <span class="text-tertiary">${timeLeft}</span></p>
         </div>
       </div>
     `;

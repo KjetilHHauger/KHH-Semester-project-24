@@ -33,15 +33,15 @@ loginForm.addEventListener('submit', async (e) => {
       localStorage.setItem('username', name);
 
       messageDiv.textContent = 'Login successful! Redirecting...';
-      messageDiv.className = 'text-green-700 font-bold text-2xl';
+      messageDiv.className = 'text-lime-200 font-bold text-2xl text-center';
 
       setTimeout(() => window.location.href = '/index.html', 2000);
     } else {
       messageDiv.textContent = `Error: ${result.data?.message || 'Login failed.'}`;
-      messageDiv.className = 'text-red-500 font-bold text-3xl';
+      messageDiv.className = 'text-pink-200 font-bold text-3xl text-center';
     }
   } catch (error) {
     messageDiv.textContent = 'An unexpected error occurred.';
-    messageDiv.className = 'text-red-500 font-bold text-2xl';
+    messageDiv.className = 'text-pink-200 font-bold text-2xl text-center';
   }
 });

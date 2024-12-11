@@ -148,7 +148,7 @@ async function loadAuctionDetails() {
       <p class="text-lg font-medium text-gray-800 text-center">Highest Bid: <strong class="text-primary">${
         highestBid || 'No bids yet'
       }</strong></p>
-      <p id="timeLeft" class="text-lg font-medium text-gray-800 text-center">Time Left: <span class="text-prussian-blue">${timeLeft}</span></p>
+      <p id="timeLeft" class="text-lg font-medium text-tertiary text-center">Time Left: <span class="text-prussian-blue">${timeLeft}</span></p>
     </div>
   </div>
   ${token ? `
@@ -160,7 +160,7 @@ async function loadAuctionDetails() {
           Place Bid
         </button>
       </div>
-    </div>` : '<p class="text-red-500 mt-4 text-center">Login to place a bid.</p>'}
+    </div>` : '<p class="text-red-500 text-xl font-bold mt-4 text-center">Login to place a bid.</p>'}
   ${bidsOverview}
 `;
 
