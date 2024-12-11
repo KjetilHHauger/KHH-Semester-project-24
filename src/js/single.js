@@ -140,29 +140,31 @@ async function loadAuctionDetails() {
   const timeLeft = calculateTimeLeft(endsAt);
 
   auctionContainer.innerHTML = `
-    <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">${title}</h1>
-    <div class="flex flex-col items-center">
-      ${carousel}
-      <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg">${description}</p>
-      <div class="flex justify-between items-center mt-4 w-full max-w-3xl">
-        <p class="text-lg font-medium text-gray-800">Highest Bid: <strong class="text-primary">${
-          highestBid || 'No bids yet'
-        }</strong></p>
-        <p id="timeLeft" class="text-lg font-medium text-gray-800">Time Left: <span class="text-prussian-blue">${timeLeft}</span></p>
-      </div>
+  <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">${title}</h1>
+  <div class="flex flex-col items-center">
+    ${carousel}
+    <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg">${description}</p>
+    <div class="flex flex-col mt-4 w-full max-w-3xl space-y-4">
+      <p class="text-lg font-medium text-gray-800 text-center">Highest Bid: <strong class="text-primary">${
+        highestBid || 'No bids yet'
+      }</strong></p>
+      <p id="timeLeft" class="text-lg font-medium text-gray-800 text-center">Time Left: <span class="text-prussian-blue">${timeLeft}</span></p>
     </div>
-    ${token ? `
-      <div class="mt-6">
-        <label for="bidAmount" class="block text-sm font-medium text-gray-700">Place a Bid</label>
-        <div class="flex items-center mt-2">
-          <input type="number" id="bidAmount" placeholder="Enter bid amount" class="p-2 border rounded-lg flex-grow">
-          <button onclick="placeBid()" class="ml-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-prussian-blue">
-            Place Bid
-          </button>
-        </div>
-      </div>` : '<p class="text-red-500 mt-4">Login to place a bid.</p>'}
-    ${bidsOverview}
-  `;
+  </div>
+  ${token ? `
+    <div class="mt-6 w-full">
+      <label for="bidAmount" class="block text-sm font-medium text-gray-700">Place a Bid</label>
+      <div class="flex flex-col space-y-4 mt-2">
+        <input type="number" id="bidAmount" placeholder="Enter bid amount" class="p-2 border rounded-lg flex-grow">
+        <button onclick="placeBid()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-prussian-blue">
+          Place Bid
+        </button>
+      </div>
+    </div>` : '<p class="text-red-500 mt-4 text-center">Login to place a bid.</p>'}
+  ${bidsOverview}
+`;
+
+
 
   setupCarousel(media.length);
   setupCountdown(endsAt);

@@ -36,30 +36,33 @@
 
   <!-- Mobile menu -->
   <div
-    id="mobileMenu"
-    class="hidden lg:hidden flex-col bg-primary text-white p-4 absolute top-14 left-0 w-full z-20"
+  id="mobileMenu"
+  class="hidden lg:hidden flex flex-col items-center bg-primary text-white p-4 absolute top-14 left-0 w-full z-20"
+>
+  <a
+    href="../index.html"
+    class="block py-4 w-full text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
+    >Auctions</a
   >
-    <a
-      href="../index.html"
-      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
-      >Auctions</a
-    >
-    <a
-      href="/src/profile.html"
-      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
-      >Profile</a
-    >
-    <a
-      href="/src/login.html"
-      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
-      id="mobileLoginLink"
-      >Login</a
-    >
-    <button
-      id="mobileLogoutButton"
-      class="block py-4 text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition hidden"
-    >
-      Logout
-    </button>
+  <a
+    href="/src/profile.html"
+    class="block py-4 w-full text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
+    >Profile</a
+  >
+  <a
+    href="/src/login.html"
+    id="mobileLoginLink"
+    class="block py-4 w-full text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition"
+    >Login</a
+  >
+  <button
+    id="mobileLogoutButton"
+    class="block py-4 w-full text-center text-white bg-prussian-blue rounded mb-2 hover:bg-primary transition hidden"
+  >
+    Logout
+  </button>
+</div>
+
+  
   </div>
 </nav>
