@@ -92,7 +92,7 @@ function renderCarousel(media) {
     .map(
       (_, index) => `
       <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 ${
-        index === 0 ? 'bg-picton-blue' : ''
+        index === 0 ? 'bg-primary' : ''
       } mx-1" data-index="${index}"></button>`
     )
     .join('');
@@ -116,7 +116,7 @@ function renderBids(bids) {
       (bid) => `
       <div class="flex justify-between p-2 border-b">
         <span>${bid.bidder.name}</span>
-        <span class="font-semibold text-picton-blue">$${bid.amount}</span>
+        <span class="font-semibold text-primary">$${bid.amount}</span>
       </div>`
     )
     .join('');
@@ -145,7 +145,7 @@ async function loadAuctionDetails() {
       ${carousel}
       <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg">${description}</p>
       <div class="flex justify-between items-center mt-4 w-full max-w-3xl">
-        <p class="text-lg font-medium text-gray-800">Highest Bid: <strong class="text-picton-blue">${
+        <p class="text-lg font-medium text-gray-800">Highest Bid: <strong class="text-primary">${
           highestBid || 'No bids yet'
         }</strong></p>
         <p id="timeLeft" class="text-lg font-medium text-gray-800">Time Left: <span class="text-prussian-blue">${timeLeft}</span></p>
@@ -156,7 +156,7 @@ async function loadAuctionDetails() {
         <label for="bidAmount" class="block text-sm font-medium text-gray-700">Place a Bid</label>
         <div class="flex items-center mt-2">
           <input type="number" id="bidAmount" placeholder="Enter bid amount" class="p-2 border rounded-lg flex-grow">
-          <button onclick="placeBid()" class="ml-2 px-4 py-2 bg-picton-blue text-white rounded-lg hover:bg-prussian-blue">
+          <button onclick="placeBid()" class="ml-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-prussian-blue">
             Place Bid
           </button>
         </div>
@@ -206,7 +206,7 @@ function setupCarousel(slidesCount) {
       slides.forEach((slide, i) => {
         slide.classList.toggle('hidden', i !== index);
       });
-      dots.forEach((d, i) => d.classList.toggle('bg-picton-blue', i === index));
+      dots.forEach((d, i) => d.classList.toggle('bg-primary', i === index));
     });
   });
 }

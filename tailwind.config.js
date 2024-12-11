@@ -1,14 +1,13 @@
 module.exports = {
-	content: ["./**/*.{html,js}","!./node_modules/**/*"],
-	theme: {
-		extend: {
-		  colors: {
-			'rich-black': '#051923',
-			'picton-blue': '#00A6FB',
-			'cta': '#003554',
-		  },
-		},
-	  },
-	plugins: [],
-}
-
+  content: ["./**/*.{html,js}", "!./node_modules/**/*"],
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#00A6FB",
+        "secondary": "#051923",
+        "tertiary": "#003554",
+      },
+    },
+  },
+  plugins: [],
+};
