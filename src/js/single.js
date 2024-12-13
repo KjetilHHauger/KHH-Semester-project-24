@@ -140,10 +140,10 @@ async function loadAuctionDetails() {
   const timeLeft = calculateTimeLeft(endsAt);
 
   auctionContainer.innerHTML = `
-  <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">${title}</h1>
+  <h1 class="text-3xl font-bold text-gray-800 text-center mb-6 overflow-hidden">${title}</h1>
   <div class="flex flex-col items-center">
     ${carousel}
-    <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg">${description}</p>
+    <p class="mt-6 text-lg text-gray-700 leading-relaxed text-center max-w-lg overflow-hidden">${description}</p>
     <div class="flex flex-col mt-4 w-full max-w-3xl space-y-4">
       <p class="text-lg font-medium text-gray-800 text-center">Highest Bid: <strong class="text-primary">${
         highestBid || 'No bids yet'
